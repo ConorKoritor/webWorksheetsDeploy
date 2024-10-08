@@ -53,6 +53,8 @@ export const createUser = async (req: Request, res: Response) => {
   try{
     const newUser = req.body as User;
 
+    newUser.dateJoined = new Date();
+
     const result = await usersCollection.insertOne(newUser);
 
     if(result){
@@ -82,6 +84,8 @@ export const createUser = async (req: Request, res: Response) => {
     const query = { _id: new ObjectId(id) };
 
     const newData = req.body as UserUpdate;
+
+    newData.lastUpdated = new Date();
 
     const result = await usersCollection.updateOne(query, {$set: newData});
 
