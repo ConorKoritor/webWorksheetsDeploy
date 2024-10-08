@@ -3,6 +3,8 @@ import { usersCollection } from "../database";
 import User from "../models/user";
 import { UserUpdate } from "../models/user";
 import { ObjectId } from "mongodb";
+import { ValidateUser } from "../models/user";
+import joi from "joi";
 
 export const getUsers = async (req: Request, res: Response) => {
     try{
@@ -50,8 +52,17 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const createUser = async (req: Request, res: Response) => {
     // create a new user in the database
+    
+    let validateResult : joi.ValidationResult<User> = ValidateUser(req.body);
+
+    if(validateResult.error){
+      res.status(400).send(validateResult.error);
+      return;
+    }
   try{
     const newUser = req.body as User;
+    
+    
 
     newUser.dateJoined = new Date();
 

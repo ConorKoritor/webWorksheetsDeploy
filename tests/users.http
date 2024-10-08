@@ -10,9 +10,20 @@ content-type: application/json
 x-api-key: 1234567890
 
 { 
-    "name" : "Michael Koritor",
+    "name" : "Brenda Kilgannon",
     "phonenumber" : "0873456789",
     "email": "jdoe123@gmail.com"
+}
+
+### Fail to create a user with a missing email
+###
+POST {{endpoint}} HTTP/3.0
+content-type: application/json
+x-api-key: 1234567890
+
+{ 
+    "name" : "Michael Koritor",
+    "phonenumber" : "0873456789"
 }
 
 ### Fail to get a user by ID
