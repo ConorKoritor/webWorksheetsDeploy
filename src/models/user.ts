@@ -5,6 +5,8 @@ export default interface User {
     phonenumber: string;
     email: string;
     id?: ObjectId;
+    dateJoined?: Date;
+    lastUpdated?: Date;
 }
 
 export interface UserUpdate{
@@ -12,4 +14,6 @@ export interface UserUpdate{
     phonenumber?: string;
     email?: string;
     id?: ObjectId;
+    dateJoined?: Date;
+    lastUpdated?: Date;
 }
