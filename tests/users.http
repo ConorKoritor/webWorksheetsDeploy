@@ -1,34 +1,57 @@
-###
-### POST Request for a contact 
-## Expected result is ........
-POST http://localhost:3001/api/v1/users HTTP/1.1
-content-type: application/json
-x-api-key: blahblah
-
-{ 
-    "name" : "John Doe",
-    "phonenumber" : "0871234567",
-    "email": "jdoe123@gmail.com"
-}
-
-###
-GET http://localhost:3001/api/v1/users/id123 HTTP/1.1
-content-type: application/json
-x-api-key: blahblah
+@endpoint = http://localhost:3000/api/v1/users
 
 ###
 ### POST Request for a contact 
 ## Expected result is ........
-POST http://localhost:3001/api/v1/users HTTP/1.1
+# @name postAUser
+@newObjectID = {{postAUser.response.headers.location}}
+POST {{endpoint}} HTTP/3.0
 content-type: application/json
+x-api-key: 1234567890
 
 { 
-    "name" : "John Doe",
-    "phonenumber" : "0871234567",
+    "name" : "Ryan Koritor",
+    "phonenumber" : "0873456789",
     "email": "jdoe123@gmail.com"
 }
 
+### Fail to get a user by ID
 ###
-GET http://localhost:3001/api/v1/users/id123 HTTP/1.1
+GET http://localhost:3000/api/v1/users/id123 HTTP/3.0
 content-type: application/json
+
+### Get a user by ID
+###
+GET {{endpoint}}/{{newObjectID}} HTTP/3.0
+content-type: application/json
+
+### Get All Users
+###
+# @name GETAllUsers
+@firstID = {{GETAllUsers.response.body.$[0]._id}}
+GET {{endpoint}} HTTP/3.0
+content-type: application/json
+
+
+###Delete a user
+###
+DELETE {{endpoint}}/{{newObjectID}} HTTP/3.0
+content-type: application/json
+
+### Fail to delete a user with a wrong id
+###
+DELETE http://localhost:3000/api/v1/users/1234 HTTP/3.0
+content-type: application/json
+
+### Update a user
+###
+PUT http://localhost:3000/api/v1/users/6705a44c1c8595284c7e49b1 HTTP/3.0
+content-type: application/json
+
+{ 
+    "phonenumber" : "0863063990",
+    "email": "jdoe123@gmail.com"
+}
+
+
 
