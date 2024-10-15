@@ -64,5 +64,9 @@ content-type: application/json
     "email": "updated@gmail.com"
 }
 
+##Get all gradehistories where there is a score greater than 99 for a homework task
+###
+GET http://localhost:3000/api/v1/gradeHistories?filter={"scores": {"$elemMatch": {"type": "homework", "score": { "$gt": 99 }}}} 
+
 
 

@@ -5,7 +5,11 @@ import { ObjectId } from "mongodb";
 
 export const getGradeHistories = async (req: Request, res: Response) => {
     try{
-      const gradeHistories = (await gradeHistoriesCollection.find({}).toArray()) as GradeHistory[];
+      const {filter} = req.query;
+
+      const filterObj = filter ? JSON.parse(filter as string) : {};
+
+      const gradeHistories = (await gradeHistoriesCollection.find(filterObj).toArray()) as GradeHistory[];
       res.status(200).json(gradeHistories);
     }
     catch(error){
