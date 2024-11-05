@@ -20,16 +20,25 @@ export const getGradeHistories = async (req: Request, res: Response) => {
         .skip((page - 1) * pageSize) //Skips the first page which will be empty
         .limit(pageSize) //Limits the amount of data shown per page        
         .toArray()) as GradeHistory[];
-
+        
+        if(!gradeHistories || !gradeHistories.length){
+          res.status(404).send("No Grade Histories found.");
+          return;
+        }
       res.status(200).json(gradeHistories);
     }
     catch(error){
       if(error instanceof Error){
-        console.log(`Issue with Getting Users: ${error.message}`);
+        console.log(`Issue with Getting Grades: ${error.message}`);
       }
       else{
-        console.log(`Error with Getting Users: ${error}`);
+        console.log(`Error with Getting Grades: ${error}`);
       }
-      res.status(500).send("oops.");
+      
+      if (error instanceof Error && error.message.includes('connect')) {
+        res.status(500).json({ error: 'Error connecting to the database' });
+        return;
+      }
+    res.status(500).json({ error: 'An error occurred while retrieving grade histories' });
     }
 };
